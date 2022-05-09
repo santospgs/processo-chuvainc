@@ -41,18 +41,18 @@
             <img src="assets/logo-nav.png" alt="">
         </figure>
 
-        <ul>
-            <li>Apresentação</li>
-            <li>Comitês</li>
-            <li>Autores</li>
-            <li class="active">Eixos temáticos</li>
-            <li>Trabalhos</li>
-            <li>Contato</li>
+        <ul id="menu">
+            <li class="item-menu">Apresentação</li>
+            <li class="item-menu">Comitês</li>
+            <li class="item-menu">Autores</li>
+            <li class="item-menu">Eixos temáticos</li>
+            <li class="item-menu active">Trabalhos</li>
+            <li class="item-menu">Contato</li>
         </ul>
     </aside>
 
     <main>
-        <header>
+        <header id="page-header">
             <div id="page-title">
                 <h5>Anais do Simpósio Latino Americano de Ciências de Alimentos</h5>
                 <h1>Anais do 13º Simpósio Latino Americano de Ciência de Alimentos </h1>
@@ -162,7 +162,20 @@
             
             <section id="discussion">
                 <h2 class="section-title">Discussões</h2>
-                <div class="section-content"></div>
+                <div class="section-content">
+                    <article class="card-discussion">
+                        <header>
+                            <h4>Assunto da pergunta aparece aqui</h4>
+                            <p>Carlos Henrique Santos</p>
+                        </header>   
+
+                        <p>Comecinho da pergunta aparece aqui resente relato inscreve-se no campo da análise da dimensão e impacto de processo formativo situado impacto de processo formativo processo...</p>
+
+                        <footer>
+
+                        </footer>
+                    </article>
+                </div>
             </section>
         </div>
     </main>
@@ -170,17 +183,5 @@
         <img src="assets/imagem-footer.png" alt="">
     </footer>
 </body>
-<script>
-    $(document).ready(function(){
-       
-        $('.moreless-button').click(function(){
-            $('.moretext').slideToggle();
-            if($(this).text() == '...ver mais'){
-                $(this).text('...ver menos')
-            } else{
-                $(this).text('...ver mais')
-            }
-        })
-    });               
-</script>
+<script src="js/main.js"></script>
 </html>
