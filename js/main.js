@@ -1,78 +1,100 @@
 $(document).ready(function(){       
     $('.moreless-button').click(function(){
         $('.moretext').slideToggle();
-        $(this).text() == '...ver mais' ? $(this).text('...ver menos') : $(this).text('...ver mais')
-        
-    })
+        $(this).text() == '...ver mais' ? $(this).text('...ver menos') : $(this).text('...ver mais');       
+    });
 
     $('.item-menu').click(function(){
-        $('.item-menu').removeClass('active')
-        $(this).addClass('active')
-    })
+        $('.item-menu').removeClass('active');
+        $(this).addClass('active');
+    });
 
-    fetch('./js/forum_data.json')
+    let topicsSource = './js/forum_data.json';
+
+    fetch(topicsSource)
     .then(function(response){
-        return response.json()
+        return response.json();
     })
     .then(function(response){
-        showCards(response)
+        showCards(response);
     })
 
-    function showCards(data){
-        let sectionDiscussion = document.querySelector('#discussion .section-content')
+    let showCards = (data) => { 
+        data.forEach( (newCard) => { createCard(newCard) } );
+    }
 
-        data.forEach(function(card){
-            /* CRIANDO O CARD */
-            let articleCard = document.createElement('article');
-            articleCard.setAttribute('id', card.id)
-            articleCard.classList.add('card-discussion')
+    let createCard = (card) => {
+        const articleCard = $('<article></article>').attr('id', card.id).addClass('card-discussion');
 
-            /*CRIANDO O HEADER */
-            let headerCard = document.createElement('header')
-            headerCard.classList.add('card-discussion-header')
+        const headerCard = $('<header></header>').addClass('card-discussion-header');
+        const headerCardTitle = $('<h4></h4>').html(card.title);
+        const headerCardAuthor = $('<p></p>').html(card.author);
 
-            let headerCardTitle = document.createElement('h4')
-            headerCardTitle.innerText = card.title
-            let headerCardAuthor = document.createElement('p')
-            headerCardAuthor.innerText = card.author
+        const contentCard = $('<p></p>').addClass('card-discussion-content').html(card.content);
 
-            /*CRIANDO O CONTEUDO */
-            let contentCard = document.createElement('p')
-            contentCard.classList.add('card-discussion-content')
-            contentCard.innerText = card.content
+        const footerCard = $('<footer></footer>');
+        const footerCardOptions = '<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>';
+        const footerLikeButton = $('<button></button>').addClass('button').html('<i class="fa fa-heart" aria-hidden="true"></i>');
+        const likesCount = $('<p></p>').addClass('likes').html(`${card.likes} likes`);
+        const answersCount = $('<p></p>').addClass('likes').html(`${card.answers.length} respostas`);
 
-            /* CRIANDO O FOOTER */
-            let footerCard = document.createElement('footer')
-            let footerCardOptions = '<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>'
-            let footerLikeButton = document.createElement('button')
-            footerLikeButton.classList.add('button')
-            footerLikeButton.innerHTML = '<i class="fa fa-heart" aria-hidden="true"></i>'
-            let likesCount = document.createElement('p')
-            likesCount.classList.add('likes')
-            likesCount.innerText = card.likes + ' likes'
-            let answersCount = document.createElement('p')
-            answersCount.classList.add('likes')
-            answersCount.innerText = card.answers.length + ' respostas'
-            
-            headerCard.appendChild(headerCardTitle)
-            headerCard.appendChild(headerCardAuthor)
-            
-            footerCard.innerHTML = footerCardOptions
-            footerCard.appendChild(footerLikeButton)
-            footerCard.appendChild(likesCount)
-            footerCard.appendChild(answersCount)
+        $(headerCard).append(headerCardTitle,headerCardAuthor);         
+        $(footerCard).append(footerCardOptions,footerLikeButton,likesCount,answersCount);
 
-            articleCard.appendChild(headerCard)
-            articleCard.appendChild(contentCard)
-            articleCard.appendChild(footerCard)
+        $(articleCard).append(headerCard,contentCard,footerCard);
 
-            sectionDiscussion.appendChild(articleCard)
-        })
+        $('#discussion .section-content').append(articleCard);
     }
 
     $('#addNewTopicButton').click(function(){
-        $('#discussion-header').hide()
-        $('#new-topic-form').show().addClass('active')
-    })
+        $('#discussion-header').hide();
+        $('#new-topic-form').show().addClass('active');
+    });
+
+    $('.btn-bold').click(function(){
+        $(this).toggleClass('text-effect');
+    });
+
+    $('.btn-italic').click(function(){
+        $(this).toggleClass('text-effect');
+    });
+
+    $('#btn-send-new-topic').click(function(){
+
+        let articleCard = $('<article></article>').addClass('card-discussion new-topic');
+
+        let overlayCard = $('<span></span>').addClass('overlay-card');
+        let overlayIcon = $('<i class="fa fa-check" aria-hidden="true"></i>');
+        let overlayTitle = $('<p><b>Aguardando feedback dos autores</b></p>');
+        let overlayEdit = $('<a>Editar tópico</a>');
+
+        overlayCard.append(overlayIcon,overlayTitle,overlayEdit);
+
+        let wrapperCard = $('<div></div>').addClass('wrapper-card') ;       
+
+        let headerCard = $('<header></header>').addClass('card-discussion-header');
+        let headerCardTitle = $('<h4></h4>').html($('#topicSubject').val());
+        let headerCardAuthor = $('<p></p>').html('Autor do tópico');
+
+        let contentCard = $('<p></p>').addClass('card-discussion-content').html($('#topicContent').val());
+
+        let footerCard = $('<footer></footer>');
+        let footerCardOptions = '<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>';
+        let footerLikeButton = $('<button></button>').addClass('button').html('<i class="fa fa-heart" aria-hidden="true"></i>');
+        let likesCount = $('<p></p>').addClass('likes').html(`0 likes`);
+        let answersCount = $('<p></p>').addClass('likes').html(`0 respostas`);
+
+        $(headerCard).append(headerCardTitle,headerCardAuthor);         
+        $(footerCard).append(footerCardOptions,footerLikeButton,likesCount,answersCount);
+
+        $(wrapperCard).append(headerCard,contentCard,footerCard);
+
+        $(articleCard).append(overlayCard,wrapperCard);
+        
+        $(articleCard).insertBefore('article#1'); 
+        $('#topicSubject').val('');
+        $('#topicContent').val(''); 
+    });
+        
 });
 
