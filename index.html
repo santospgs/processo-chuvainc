@@ -148,14 +148,14 @@
                     <div id="new-topic-form">
                         <p>Tem uma dúvida ou sugestão? Compartilhe seu feedback com os autores!</p>
                         <label for="topicSubject">Assunto</label><br>
-                        <input type="text" id="topicSubject" placeholder="Defina um tópico sucinto para notificar os autores..."><br>
+                        <input type="text" id="topicSubject" placeholder="Defina um tópico sucinto para notificar os autores..." required><br>
                         <label for="topicContent">Conteúdo</label><br>
                         <div class="newtopic-content-wrapper">
-                            <textarea id="topicContent"></textarea>
+                            <textarea id="topicContent" required></textarea>
                             <footer id="newTopicFooter">
                                 <i class="fa fa-bold btn-bold" aria-hidden="true"></i>
                                 <i class="fa fa-italic btn-italic" aria-hidden="true"></i>
-                                <button id="btn-send-new-topic"value="">Enviar</button>
+                                <button type="submit" id="btn-send-new-topic">Enviar</button>
                             </footer>
                         </div>
                     </div>                    
