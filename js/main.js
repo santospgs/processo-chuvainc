@@ -152,5 +152,10 @@ $(document).ready(function(){
         $('<a>Descubra outros trabalhos!</a>').insertAfter('#discussion-header p').addClass('edit-link');
         $('#addNewTopicButton').html('criar novo tópico');
     }
+    
+    $('.menu-toggle').click(function(){
+        $('aside').toggleClass('hide-menu')
+        $('.menu-toggle').toggleClass('hide-menu-btn-slide')
+    })    
 });
 
